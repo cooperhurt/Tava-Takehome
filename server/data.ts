@@ -1,4 +1,4 @@
-import { Employee } from "../types";
+import { Employee } from "../src/types";
 
 export const data: Employee[] = [
   {

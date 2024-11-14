@@ -1,25 +1,23 @@
 {
-  "include": [
-    "./src/**/*"
-  ],
+  "include": ["./src/**/*", "server/data.ts"],
   "compilerOptions": {
-    "strict": true,
     "esModuleInterop": true,
-    "lib": [
-      "dom",
-      "es2015"
-    ],
+    "isolatedModules": true,
     "jsx": "react-jsx",
-    "target": "es5",
+    "lib": ["dom", "dom.iterable", "esnext"],
+    "module": "esnext",
+    "moduleResolution": "node",
+    "noImplicitAny": false,
+    "outDir": "dist",
+    "resolveJsonModule": true,
+    "strict": false,
+    "strictNullChecks": false,
+    "target": "esnext",
     "allowJs": true,
     "skipLibCheck": true,
     "allowSyntheticDefaultImports": true,
     "forceConsistentCasingInFileNames": true,
     "noFallthroughCasesInSwitch": true,
-    "module": "esnext",
-    "moduleResolution": "node",
-    "resolveJsonModule": true,
-    "isolatedModules": true,
     "noEmit": true
   }
 }

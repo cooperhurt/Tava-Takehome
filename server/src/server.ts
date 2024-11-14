@@ -18,10 +18,6 @@ app.use(cors());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json({ limit: "10mb" }));
 
-
-// This will require the schemas for the database and it can reference the stuff
-require("./models");
-
 const router = express.Router();
 
 // Route/API endpoints
