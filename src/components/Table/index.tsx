@@ -6,17 +6,17 @@ import {
   getCoreRowModel,
   getFilteredRowModel,
   flexRender,
+  getSortedRowModel,
+  SortingState,
 } from '@tanstack/react-table';
 import styled from 'styled-components';
 
-// We should use Generics here but tsconfig is off TableComponentProps<T extends object>
 interface TableComponentProps<T extends object> {
   data: T[];
-  columns: ColumnDef<T, any>[]; // Columns are based on the generic type TData
+  columns: ColumnDef<T, any>[];
   onRowClick?: (row: T) => void;
 }
 
-// Table and Filter Styles
 const StyledTable = styled.table`
   width: 100%;
   border-collapse: collapse;
@@ -53,30 +53,29 @@ const FilterInput = styled.input`
   font-size: 0.9em;
 `;
 
-// This should be proper generic but something with TS is off <T extends object>({ data, columns, onRowClick }: TableComponentProps<T>)
 export const Table = <T extends object>({
   data,
   columns,
   onRowClick,
 }: TableComponentProps<T>) => {
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
+  const [sorting, setSorting] = useState<SortingState>([]);
 
-  // Set up the table with filtering
   const table = useReactTable({
     data,
     columns,
     state: {
       columnFilters,
+      sorting,
     },
     onColumnFiltersChange: setColumnFilters,
     getCoreRowModel: getCoreRowModel(),
     getFilteredRowModel: getFilteredRowModel(),
+    getSortedRowModel: getSortedRowModel(),
   });
 
-  // Handle change in filter inputs
   const handleFilterChange = (columnId: string, value: string) => {
     setColumnFilters((prev) => {
-      // Find existing filter
       const existingFilter = prev.find((filter) => filter.id === columnId);
 
       // Update or add filter
@@ -90,20 +89,40 @@ export const Table = <T extends object>({
     });
   };
 
+  // Handle sorting when column headers are clicked
+  const handleSort = (columnId: string) => {
+    setSorting((prev) => {
+      const existingSort = prev.find((sort) => sort.id === columnId);
+      if (existingSort) {
+        // Toggle sort direction
+        return prev.map((sort) =>
+          sort.id === columnId ? { ...sort, desc: !sort.desc } : sort
+        );
+      } else {
+        // Add new sort
+        return [...prev, { id: columnId, desc: false }];
+      }
+    });
+  };
+
   return (
     <StyledTable>
       <thead>
         {table.getHeaderGroups().map((headerGroup) => (
           <tr key={headerGroup.id}>
             {headerGroup.headers.map((header) => (
-              <th key={header.id}>
+              <th key={header.id} onClick={() => handleSort(header.id)}>
                 {flexRender(
                   header.column.columnDef.header,
                   header.getContext()
                 )}
+                {header.column.getIsSorted()
+                  ? header.column.getIsSorted() === 'desc'
+                    ? ' 🔽'
+                    : ' 🔼'
+                  : ''}
                 <FilterInput
                   placeholder={`Filter by ${header.column.columnDef.header}`}
-                  // NOTE: We should be casting as a string here but TS is off
                   value={
                     (columnFilters.find((filter) => filter.id === header.id)
                       ?.value as string) || ''

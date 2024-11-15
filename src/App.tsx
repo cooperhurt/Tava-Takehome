@@ -8,6 +8,7 @@ import { EmployeePage } from './pages/Employee';
 import { EmployeeShow } from './pages/Employee/show';
 import { EmployeeEdit } from './pages/Employee/edit';
 import { HomePage } from './pages/Home';
+import { EmployeeNew } from './pages/Employee/new';
 
 const StyledNavLink = styled(NavLink)`
   display: block;
@@ -59,6 +60,7 @@ export const App: React.FC = () => {
           <Route path="/" element={<HomePage />} />
           <Route path="/payroll" element={<PayrollPage />} />
           <Route path="/employees" element={<EmployeePage />} />
+          <Route path="/employees/new" element={<EmployeeNew />} />
           <Route path="/employees/:id" element={<EmployeeShow />} />
           <Route path="/employees/:id/edit" element={<EmployeeEdit />} />
         </Routes>

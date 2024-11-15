@@ -45,4 +45,55 @@ router.route('/:id').get(async (req, res) => {
   return res.status(200).json({ employee });
 });
 
+router.route('/:id').put(async (req, res) => {
+  const { id } = req.params;
+  const updatedEmployee: Partial<Employee> = req.body;
+
+  const employeeIndex = employees.findIndex((emp) => emp.id === Number(id));
+  if (employeeIndex === -1) {
+    return res.status(404).json({ message: 'Employee not found' });
+  }
+
+  const employee = employees[employeeIndex];
+  const updatedEmployeeData = { ...employee, ...updatedEmployee };
+
+  employees[employeeIndex] = updatedEmployeeData;
+
+  return res.status(200).json({
+    message: 'Employee updated successfully',
+    employee: updatedEmployeeData,
+  });
+});
+
+router.route('/:id').delete(async (req, res) => {
+  const { id } = req.params;
+
+  const employeeIndex = employees.findIndex((emp) => emp.id === Number(id));
+  if (employeeIndex === -1) {
+    return res.status(404).json({ message: 'Employee not found' });
+  }
+
+  employees.splice(employeeIndex, 1);
+
+  return res.status(200).json({
+    message: 'Employee deleted successfully',
+  });
+});
+
+router.route('/').post(async (req, res) => {
+  const employee = req.body as Partial<Employee>;
+
+  // NOTE: We should validate or use ORM to confirm all neccessary datat is there and handle the error
+  const newEmployee = {
+    id: Math.floor(Math.random() * 100),
+    ...employee,
+  } as Employee;
+  employees.push(newEmployee);
+
+  return res.status(200).json({
+    message: 'Employee deleted successfully',
+    newEmployee,
+  });
+});
+
 export default router;

@@ -36,4 +36,6 @@ This is a React application with express/node server written in Typescript. Depe
 
  - The setting of the page title could be follow a more consisent pattern that could be shared between pages.
 
- - There is a TS warning on the Table component for the column value and component, but compiler is happy but browser is giving error.
+ - After deleting Employee it would be nice if there was some kind of snackbar/flash message to alert the user the employee was deleted. But would need to implement some providers and what not to fully implement this or alternatively import a libary like Material UI to do this.
+
+ - Could make the StatusBadge more universal say like `Chip` Component.

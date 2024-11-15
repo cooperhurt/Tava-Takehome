@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 import styled, { keyframes } from 'styled-components';
-import { Employee } from '../../types';
+import { Employee, EMPLOYEE_STATUS } from '../../types';
 import { Card } from '../../components/Card';
 
 const ProfileDetail = styled.div`
@@ -68,6 +68,19 @@ const Button = styled.button`
   }
 `;
 
+interface IStatusBadgeProps {
+  $status: EMPLOYEE_STATUS;
+}
+
+const StatusBadge = styled.span<IStatusBadgeProps>`
+  padding: 5px 10px;
+  border-radius: 4px;
+  font-size: 0.9em;
+  color: white;
+  background-color: ${({ $status }) =>
+    $status === 'active' ? 'green' : 'orange'};
+`;
+
 export const EmployeeShow: React.FC = () => {
   const [employee, setEmployee] = useState<Employee | null>(null);
   const navigate = useNavigate();
@@ -88,8 +101,16 @@ export const EmployeeShow: React.FC = () => {
 
   const formattedEmployeeName = `${employee?.firstName} ${employee?.lastName}`;
 
-  const confirmAndDeleteEmployee = () =>
-    console.log('we want to delete employee');
+  const confirmAndDeleteEmployee = () => {
+    axios
+      .delete(`http://localhost:8080/api/employees/${id}`)
+      .then(({ data }) => {
+        navigate('/employees');
+      })
+      .catch((error) => {
+        console.log(error, 'ERROR: Error occurred fetching employee');
+      });
+  };
 
   if (!employee) {
     return <LoadingIndicator />;
@@ -113,7 +134,10 @@ export const EmployeeShow: React.FC = () => {
         <ProfileLabel>Favorite Quote:</ProfileLabel> {employee.quote}
       </ProfileDetail>
       <ProfileDetail>
-        <ProfileLabel>Status:</ProfileLabel> {employee.status}
+        <ProfileLabel>Status:</ProfileLabel>{' '}
+        <StatusBadge $status={employee.status}>
+          {employee.status.toUpperCase()}
+        </StatusBadge>
       </ProfileDetail>
       <ButtonContainer>
         <Button

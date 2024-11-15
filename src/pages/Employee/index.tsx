@@ -6,6 +6,7 @@ import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import { Employee, EMPLOYEE_STATUS } from '../../types';
 import axios from 'axios';
+import { Button } from '../../components/Button';
 
 const StyledCardList = styled.div`
   display: flex;
@@ -26,8 +27,39 @@ const StatusBadge = styled.span<IStatusBadgeProps>`
     $status === 'active' ? 'green' : 'orange'};
 `;
 
+const Avatar = styled.img`
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  margin-right: 10px;
+`;
+
+const NameCell = styled.div`
+  display: flex;
+  align-items: center;
+`;
+
+const StyledHeader = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+`;
+
+const AddEmployeeButton = styled(Button)`
+  margin-left: auto;
+`;
+
 const employeeColumns: ColumnDef<Employee>[] = [
-  { accessorKey: 'firstName', header: 'Name' },
+  {
+    accessorKey: 'firstName',
+    header: 'Name',
+    cell: ({ row }) => (
+      <NameCell>
+        <Avatar src={row.original.avatarUrl} alt="Avatar" loading="lazy" />
+        {`${row.original.firstName} ${row.original.lastName}`}
+      </NameCell>
+    ),
+  },
   { accessorKey: 'dateStarted', header: 'Started Date' },
   { accessorKey: 'quote', header: 'Quote' },
   {
@@ -81,7 +113,15 @@ export const EmployeePage: React.FC = () => {
 
   return (
     <StyledCardList>
-      <h1>Employee's</h1>
+      <StyledHeader>
+        <h1>Employee's</h1>
+        <AddEmployeeButton
+          data-action="new"
+          onClick={() => navigate('/employees/new')}
+        >
+          Add Employee
+        </AddEmployeeButton>
+      </StyledHeader>
       <Card>
         <h3>Managment Employee's</h3>
         <Table
