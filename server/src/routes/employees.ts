@@ -15,9 +15,10 @@ router.route('/').get(async (req, res) => {
 
 router.route('/:id').get(async (req, res) => {
   const { id } = req.params;
+  console.log(id, 'id is');
 
-  console.log(id, 'id requested is');
   const employee = employees.find((emp) => emp.id === Number(id));
+  console.log(employee, 'id is');
 
   return res.status(200).json({ employee });
 });
