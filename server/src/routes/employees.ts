@@ -13,16 +13,6 @@ router.route('/').get(async (req, res) => {
   return res.status(200).json({ employees });
 });
 
-router.route('/:id').get(async (req, res) => {
-  const { id } = req.params;
-  console.log(id, 'id is');
-
-  const employee = employees.find((emp) => emp.id === Number(id));
-  console.log(employee, 'id is');
-
-  return res.status(200).json({ employee });
-});
-
 router.route('/type/:employeeDaprment').get(async (req, res) => {
   const { employeeDaprment } = req.params;
   const filteredEmployees = employees.filter(
@@ -45,6 +35,14 @@ router.route('/aggregated').get(async (req, res) => {
   );
 
   res.json(aggregatedEmployees);
+});
+
+router.route('/:id').get(async (req, res) => {
+  const { id } = req.params;
+
+  const employee = employees.find((emp) => emp.id === Number(id));
+
+  return res.status(200).json({ employee });
 });
 
 export default router;
