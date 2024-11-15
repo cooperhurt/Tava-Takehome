@@ -35,3 +35,5 @@ This is a React application with express/node server written in Typescript. Depe
  - The package.json start scripts had to get creative to get this up and running but overall I think with a little work you could leverage the same tsoncfig file, but ended up having to create essentially another small project. (This may make it hard to distrbute, but for sake of takehome it should be OK)
 
  - The setting of the page title could be follow a more consisent pattern that could be shared between pages.
+
+ - There is a TS warning on the Table component for the column value and component, but compiler is happy but browser is giving error.

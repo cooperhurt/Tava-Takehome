@@ -1,15 +1,13 @@
-import "./styles.css";
-import React from "react"
-import { BrowserRouter, Route, Routes, NavLink } from "react-router-dom";
-import Payroll from "./Payroll";
-import logo from "./assets/logo.png";
-import styled from "styled-components";
-import { PayrollPage } from "./pages/Payroll";
-import { EmployeePage } from "./pages/Employee";
-import { EmployeeShow } from "./pages/Employee/show";
-import { EmployeeEdit } from "./pages/Employee/edit";
-import { HomePage } from "./pages/Home";
-
+import './styles.css';
+import React from 'react';
+import { BrowserRouter, Route, Routes, NavLink } from 'react-router-dom';
+import logo from './assets/logo.png';
+import styled from 'styled-components';
+import { PayrollPage } from './pages/Payroll';
+import { EmployeePage } from './pages/Employee';
+import { EmployeeShow } from './pages/Employee/show';
+import { EmployeeEdit } from './pages/Employee/edit';
+import { HomePage } from './pages/Home';
 
 const StyledNavLink = styled(NavLink)`
   display: block;
@@ -30,18 +28,18 @@ const StyledNavLink = styled(NavLink)`
   &:not(.active):hover {
     background-color: rgba(0, 0, 0, 0.25);
   }
-`
+`;
 
 const StyledNavList = styled.div`
   display: flex;
   flex-direction: column;
   gap: 16px;
   padding: 20px;
-`
+`;
 
 const StyledMain = styled.main`
   padding: 32px;
-`
+`;
 
 export const App: React.FC = () => {
   return (
@@ -51,8 +49,8 @@ export const App: React.FC = () => {
           <img src={logo} alt="logo" />
         </div>
         <StyledNavList>
-          <StyledNavLink to='/'>Home</StyledNavLink>
-          <StyledNavLink to='payroll'>Payroll</StyledNavLink>
+          <StyledNavLink to="/">Home</StyledNavLink>
+          <StyledNavLink to="payroll">Payroll</StyledNavLink>
           <StyledNavLink to="/employees">Employees</StyledNavLink>
         </StyledNavList>
       </nav>
@@ -67,4 +65,4 @@ export const App: React.FC = () => {
       </StyledMain>
     </BrowserRouter>
   );
-}
+};

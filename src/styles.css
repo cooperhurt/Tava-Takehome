@@ -12,7 +12,7 @@ body,
 body {
   margin: 0;
   background-color: rgb(247, 249, 252);
-  font-family: poppins, "Helvetica", "Arial", sans-serif;
+  font-family: poppins, 'Helvetica', 'Arial', sans-serif;
 }
 
 *,
