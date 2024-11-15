@@ -19,10 +19,9 @@ export const EmployeeNew: React.FC = () => {
     );
   };
 
-  const handleSave = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSave = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log(employee, 'posting employee value is ');
-    axios
+    await axios
       .post<{ message: string; newEmployee: Employee }>(
         `http://localhost:8080/api/employees`,
         employee

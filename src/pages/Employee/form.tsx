@@ -39,7 +39,7 @@ const ButtonContainer = styled.div`
 `;
 
 interface IEmployeeFormProps {
-  handleSave: (e: React.FormEvent<HTMLFormElement>) => void;
+  handleSave: (e: React.FormEvent<HTMLFormElement>) => Promise<void>;
   employee?: Partial<Employee>;
   handleInputChange: (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>

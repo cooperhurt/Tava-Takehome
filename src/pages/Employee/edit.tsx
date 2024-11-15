@@ -52,8 +52,9 @@ export const EmployeeEdit: React.FC = () => {
     );
   };
 
-  const handleSave = () => {
-    axios
+  const handleSave = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    await axios
       .put(`http://localhost:8080/api/employees/${id}`, employee)
       .then(() => {
         navigate(`/employees/${id}`);

@@ -61,7 +61,6 @@ Impress the team by going above and beyond with these extras:
 
 - **Error Handling and User Feedback**: Implement user-friendly error messages and loading states.
 
-
 - **Advanced Filtering**: Allow filtering by multiple fields like department or status.
 
 - **Dark Mode**: Add a toggle for dark mode to showcase design flexibility.
