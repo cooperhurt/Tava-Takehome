@@ -23,10 +23,7 @@ const router = express.Router();
 import routes from './routes/employees';
 router.use('/employees', routes);
 
-// Do some kind of route authoriation here
-// router.use()
-
-//Setup the server
+// Setup the server
 app.use('/api', router);
 
 export default { server, app };

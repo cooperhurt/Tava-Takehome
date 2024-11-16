@@ -2,13 +2,23 @@ import express from 'express';
 import { camelCase } from 'lodash';
 import { data as employees } from '../../data';
 import { Employee } from '../../../src/types';
+import Joi from 'joi';
+
 const router = express.Router();
 
 interface AggregatedEmployees {
-  [key: string]: Employee[]; // Key is a string (employee type), and value is an array of Employee objects
+  [key: string]: Employee[];
 }
 
-// This is recommended to
+const employeeSchema = Joi.object<Employee>({
+  firstName: Joi.string().required(),
+  lastName: Joi.string().required(),
+  dateStarted: Joi.date().required(),
+  department: Joi.string().required(),
+  quote: Joi.string().optional(),
+  status: Joi.string().required(),
+});
+
 router.route('/').get(async (req, res) => {
   return res.status(200).json({ employees });
 });
@@ -81,9 +91,13 @@ router.route('/:id').delete(async (req, res) => {
 });
 
 router.route('/').post(async (req, res) => {
+  // Validates the body matches the required attributes of Employee Type
+  const { error } = employeeSchema.validate(req.body);
+  if (error) {
+    return res.status(400).json({ message: error });
+  }
   const employee = req.body as Partial<Employee>;
 
-  // NOTE: We should validate or use ORM to confirm all neccessary datat is there and handle the error
   const newEmployee = {
     id: Math.floor(Math.random() * 100),
     ...employee,
