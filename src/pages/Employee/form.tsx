@@ -54,10 +54,11 @@ export const EmployeeForm: React.FC<IEmployeeFormProps> = ({
   handleCancel,
 }) => {
   return (
-    <form onSubmit={handleSave}>
+    <form onSubmit={handleSave} data-testid="employeeForm">
       <ProfileDetail>
         <ProfileLabel>First Name:</ProfileLabel>
         <Input
+          data-testid="firstNameInput"
           type="text"
           name="firstName"
           value={employee?.firstName}
@@ -68,6 +69,7 @@ export const EmployeeForm: React.FC<IEmployeeFormProps> = ({
       <ProfileDetail>
         <ProfileLabel>Last Name:</ProfileLabel>
         <Input
+          data-testid="lastNameInput"
           type="text"
           name="lastName"
           value={employee?.lastName}
@@ -78,7 +80,7 @@ export const EmployeeForm: React.FC<IEmployeeFormProps> = ({
       <ProfileDetail>
         <ProfileLabel>Started Date:</ProfileLabel>
         <Input
-          type="datetime"
+          type="datetime-local"
           name="dateStarted"
           value={employee?.dateStarted}
           onChange={handleInputChange}
@@ -128,7 +130,7 @@ export const EmployeeForm: React.FC<IEmployeeFormProps> = ({
         </Select>
       </ProfileDetail>
       <ButtonContainer>
-        <Button data-action="save" type="submit">
+        <Button data-testid="submitButton" data-action="save" type="submit">
           Save
         </Button>
         <Button data-action="cancel" type="button" onClick={handleCancel}>
